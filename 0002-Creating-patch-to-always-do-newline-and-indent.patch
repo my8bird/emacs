@@ -1,0 +1,38 @@
+From b2376a91c033e53147f8223982d4f8bebe8a2218 Mon Sep 17 00:00:00 2001
+From: unknown <pair13@.ISLLCNETS.Studentloan.org>
+Date: Mon, 8 Sep 2008 16:42:06 -0500
+Subject: [PATCH] Creating patch to always do newline-and-indent
+
+---
+ mine/customizations.el |    2 ++
+ mine/ruby.el           |    1 -
+ 2 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/mine/customizations.el b/mine/customizations.el
+index fa31c57..eec36e7 100644
+--- a/mine/customizations.el
++++ b/mine/customizations.el
+@@ -2,6 +2,8 @@
+ (global-set-key "\C-x\C-m" 'execute-extended-command)
+ (global-set-key "\C-x\C-k" 'kill-region)
+ (global-set-key "\C-x\C-j" 'speedbar)
++(global-set-key "\r" 'newline-and-indent)
++
+ (global-unset-key "\C-z")
+ 
+ ;; Setup Environmental Variables
+diff --git a/mine/ruby.el b/mine/ruby.el
+index 605df81..bebc9f2 100644
+--- a/mine/ruby.el
++++ b/mine/ruby.el
+@@ -10,7 +10,6 @@
+ (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+ (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+ (autoload 'ruby-mode "ruby-mode" "Major mode for editing Ruby code" t)
+-(add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
+ (add-hook 'ruby-mode-hook (lambda () (ruby-electric-mode t)))
+ 
+ ;; Flymake Ruby
+-- 
+1.5.6.1.1071.g76fb
+
