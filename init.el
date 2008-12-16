@@ -14,6 +14,7 @@
 (load "ecb.el")
 (load "erlang.el")
 (load "javascript")
+(load "nxhtml/autostart.el")
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
 
