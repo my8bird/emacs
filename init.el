@@ -20,7 +20,6 @@
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (setq-default py-indent-offset 3)
 (setq-default indent-tabs-mode nil)
-(load "nxhtml/autostart.el")
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
 
