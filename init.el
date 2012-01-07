@@ -30,6 +30,10 @@
 
 (tool-bar-mode nil)
 
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/mine/ac-dict")
+(ac-config-default)
+
 (global-set-key (kbd "C-c b") 'w3m-bookmark-view)
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
