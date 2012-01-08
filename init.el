@@ -1,6 +1,7 @@
 
 ;;;; Nate's .emacs file
 
+
 (defvar emacs-root (concat (getenv "HOME") "/.emacs.d/"))
 
 (defun add-path (p)
@@ -41,5 +42,8 @@
    [?\M-x ?w ?3 ?m ?- ?b ?r ?o tab return ?h ?t ?t ?p ?: ?/ ?/ ?d ?o ?c ?. ?t ?r ?o ?l ?l ?t ?e ?c ?h ?. ?c ?o ?m ?/ ?4 ?. ?5 ?/ ?c ?a ?l backspace backspace ?l ?a ?s ?s ?e ?s ?. ?h ?t ?m ?l return])
 
 (global-set-key (kbd "C-c q") 'go-to-qt-api)
+
+;; Me likey column count
+(column-number-mode t)
 
 (message "My .emacs loaded in %ds." (destructuring-bind (hi lo ms) (current-time) (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
