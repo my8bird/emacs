@@ -19,6 +19,7 @@
 ;;(autoload 'js2-mode "js2-mode" nil t)
 ;;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (load "sass-mode.el")
+(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 (load "haml-mode.el")
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (setq-default py-indent-offset 3)
