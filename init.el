@@ -16,13 +16,14 @@
 (load "ecb.el")
 (load "erlang.el")
 ;;(load "javascript")
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;;(autoload 'js2-mode "js2-mode" nil t)
+;;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (load "sass-mode.el")
 (load "haml-mode.el")
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (setq-default py-indent-offset 3)
 (setq-default indent-tabs-mode nil)
+(setq js-indent-level 3)
 
 ;;(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
 
