@@ -21,9 +21,17 @@
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 (load "haml-mode.el")
 (autoload 'python-mode "python-mode" "Python editing mode." t)
+
 (setq-default py-indent-offset 3)
 (setq-default indent-tabs-mode nil)
 (setq js-indent-level 3)
+(setq-default indent-tabs-mode nil) ; always replace tabs with spaces
+(setq-default tab-width 3) ; set tab width to 3 for all buffers
+(setq-default c-basic-offset 3)
+
+;;https://github.com/defunkt/coffee-mode
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 
 ;;(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
 
@@ -34,19 +42,26 @@
 
 (tool-bar-mode nil)
 
- (when (load "flymake" t) 
-         (defun flymake-pyflakes-init () 
-           (let* ((temp-file (flymake-init-create-temp-buffer-copy 
-                              'flymake-create-temp-inplace)) 
-              (local-file (file-relative-name 
-                           temp-file 
-                           (file-name-directory buffer-file-name)))) 
-             (list "pyflakes" (list local-file)))) 
+;; Syntax highlighting in python files
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "pyflakes" (list local-file))))
 
-         (add-to-list 'flymake-allowed-file-name-masks 
-                  '("\\.py\\'" flymake-pyflakes-init))) 
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
 
-   (add-hook 'find-file-hook 'flymake-find-file-hook)
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+
+;; Enable Spell checking on some files
+(add-hook 'text-mode-hook 'turn-on-flyspell)
+(add-hook 'python-mode-hook 'flyspell-prog-mode)
+(add-hook 'coffee-mode-hook 'flyspell-prog-mode)
+(add-hook 'javascript-mode-hook 'flyspell-prog-mode)
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/mine/ac-dict")
@@ -56,9 +71,5 @@
 
 ;; Me likey column count
 (column-number-mode t)
-
-(setq-default indent-tabs-mode nil) ; always replace tabs with spaces
-(setq-default tab-width 3) ; set tab width to 3 for all buffers
-(setq-default c-basic-offset 3)
 
 (message "My .emacs loaded in %ds." (destructuring-bind (hi lo ms) (current-time) (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
