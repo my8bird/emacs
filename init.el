@@ -11,16 +11,17 @@
 (add-path "mine")
 (load "dependencies.el")
 (load "customizations.el")
-(load "ruby.el")
-(load "ecb.el")
-(load "erlang.el")
+;;(load "ruby.el")
+;;(load "ecb.el")
+;;(load "erlang.el")
 ;;(load "javascript")
-;;(autoload 'js2-mode "js2-mode" nil t)
-;;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(load "sass-mode.el")
-(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
-(load "haml-mode.el")
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;;(load "scss-mode.el")
+;;(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
+;;(load "haml-mode.el")
 (autoload 'python-mode "python-mode" "Python editing mode." t)
+
 
 (setq-default py-indent-offset 3)
 (setq-default indent-tabs-mode nil)
@@ -103,5 +104,3 @@
 
 ;; Me likey column count
 (column-number-mode t)
-
-(message "My .emacs loaded in %ds." (destructuring-bind (hi lo ms) (current-time) (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
