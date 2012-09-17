@@ -17,6 +17,11 @@
 (require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 
+;; SCSS
+(add-path "scss-mode")
+(require 'scss-mode)
+(add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
+
 ;; Easier File Finder (C-x C-f)
 (require 'ido)
 (ido-mode t)
