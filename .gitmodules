@@ -7,3 +7,6 @@
 [submodule "scss-mode"]
 	path = scss-mode
 	url = git://github.com/antonj/scss-mode.git
+[submodule "color-theme"]
+	path = color-theme
+	url = git@github.com:my8bird/emacs-color-theme.git
