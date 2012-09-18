@@ -46,6 +46,7 @@
 (require 'scss-mode)
 (setq scss-compile-at-save nil)
 (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
+(setq scss-compile-at-save nil)
 
 ;; - Tell me when I make stupid whitespaces
 (setq-default show-trailing-whitespace t)
