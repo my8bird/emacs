@@ -5,16 +5,14 @@
 
 (defvar *emacs-load-start* (current-time))
 
-
 ;; Set the whitespace rules I must follow
 ;; - Do this before loading other things encase they cash them
-(setq-default py-indent-offset 3)
-(setq-default indent-tabs-mode nil)
+(setq py-indent-offset 3)
+(setq indent-tabs-mode nil)
 (setq js-indent-level 3)
-(setq-default indent-tabs-mode nil) ; always replace tabs with spaces
-(setq-default tab-width 3) ; set tab width to 3 for all buffers
-(setq-default c-basic-offset 3)
-
+(setq indent-tabs-mode nil) ; always replace tabs with spaces
+(setq tab-width 3) ; set tab width to 3 for all buffers
+(setq c-basic-offset 3)
 
 ;; Setup theming
 (add-path "color-theme")
@@ -53,14 +51,16 @@
 ;; - Provide a simple way to fix white space
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
-
 ;; Setup the UI the way i like it
 ;; - move the scrollbars
 (setq scroll-bar-mode-explicit t)
 (set-scroll-bar-mode `right)
 
 ;; - There is no reason for the toolbar
-(tool-bar-mode nil)
+(tool-bar-mode -1)
+
+;; - Why would I want to see the splash screen
+(setq inhibit-splash-screen t)
 
 ;; - Keep the menus upto date.
 (setq imenu-auto-rescan 1)
@@ -76,12 +76,11 @@
 ;; Easier File Finder (C-x C-f)
 (require 'ido)
 (ido-mode t)
+(setq ido-max-directory-size 100000)
 
 ;; Auto revert files
 (global-auto-revert-mode 1)
 
 ;; Don't make backups
-(setq make-backup-files nil)
-(setq version-control nil)
-
-
+(setq make-backup-files -1)
+(setq version-control -1)
