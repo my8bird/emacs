@@ -10,6 +10,3 @@
 [submodule "color-theme"]
 	path = color-theme
 	url = git@github.com:my8bird/emacs-color-theme.git
-[submodule "clojure-mode"]
-	path = clojure-mode
-	url = git://github.com/jochu/clojure-mode.git

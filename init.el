@@ -30,9 +30,9 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; Clojure
-(add-path "clojure-mode")
-(require 'clojure-mode)
-(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+;;(add-path "clojure-mode")
+;;(require 'clojure-mode)
+;;(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 
 ;; CoffeeScript
 (add-path "coffee-mode")
