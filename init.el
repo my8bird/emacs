@@ -5,15 +5,6 @@
 
 (defvar *emacs-load-start* (current-time))
 
-;; Set the whitespace rules I must follow
-;; - Do this before loading other things encase they cash them
-(setq py-indent-offset 3)
-(setq indent-tabs-mode nil)
-(setq js-indent-level 3)
-(setq indent-tabs-mode nil) ; always replace tabs with spaces
-(setq tab-width 3) ; set tab width to 3 for all buffers
-(setq c-basic-offset 3)
-
 ;; Setup theming
 (add-path "color-theme")
 (require 'color-theme)
@@ -22,6 +13,11 @@
      (color-theme-initialize)
      (color-theme-charcoal-black)))
 
+
+;; Spell checking
+(add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
+(setq ispell-program-name "aspell")
+(require 'ispell)
 
 ;; Add the packages I care about
 ;; -JavaScript
@@ -45,6 +41,24 @@
 (setq scss-compile-at-save nil)
 (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
 (setq scss-compile-at-save nil)
+
+;; Python
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+               'flymake-create-temp-inplace))
+       (local-file (file-relative-name
+            temp-file
+            (file-name-directory buffer-file-name))))
+      (list "pyflakes"  (list temp-file))))
+   (add-to-list 'flymake-allowed-file-name-masks
+             '("\\.py\\'" flymake-pyflakes-init)))
+
+
+;; Enable spell check
+(mapcar (lambda (mode-hook) (add-hook mode-hook 'flyspell-prog-mode))
+        '(python-mode-hook))
+
 
 ;; - Tell me when I make stupid whitespaces
 (setq-default show-trailing-whitespace t)
@@ -84,3 +98,12 @@
 ;; Don't make backups
 (setq make-backup-files -1)
 (setq version-control -1)
+
+;; Set the whitespace rules I must follow
+;; - Do this before loading other things encase they cash them
+(setq py-indent-offset 3)
+(setq indent-tabs-mode nil)
+(setq js-indent-level 3)
+(setq indent-tabs-mode nil) ; always replace tabs with spaces
+(setq tab-width 3) ; set tab width to 3 for all buffers
+(setq c-basic-offset 3)
