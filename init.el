@@ -5,6 +5,18 @@
 
 (defvar *emacs-load-start* (current-time))
 
+;; Set the whitespace rules I must follow
+;; - Do this before loading other things encase they cash them
+(setq-default py-indent-offset 3)
+(setq-default indent-tabs-mode nil)
+(setq js-indent-level 3)
+(setq-default indent-tabs-mode nil) ; always replace tabs with spaces
+(setq-default tab-width 3) ; set tab width to 3 for all buffers
+(setq-default c-basic-offset 3)
+
+(add-hook 'python-mode-hook '(lambda ()
+(setq python-indent 3)))
+
 ;; Setup theming
 (add-path "color-theme")
 (require 'color-theme)
@@ -24,11 +36,6 @@
 (add-path "js2-mode")
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;; Clojure
-;;(add-path "clojure-mode")
-;;(require 'clojure-mode)
-;;(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 
 ;; CoffeeScript
 (add-path "coffee-mode")
