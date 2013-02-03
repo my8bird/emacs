@@ -53,19 +53,29 @@
 (when (load "flymake" t)
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-               'flymake-create-temp-inplace))
-       (local-file (file-relative-name
-            temp-file
-            (file-name-directory buffer-file-name))))
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
       (list "pyflakes"  (list temp-file))))
-   (add-to-list 'flymake-allowed-file-name-masks
-             '("\\.py\\'" flymake-pyflakes-init)))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
 
 
 ;; Enable spell check
 (mapcar (lambda (mode-hook) (add-hook mode-hook 'flyspell-prog-mode))
         '(python-mode-hook))
 
+
+;; Handlebars
+(add-path "handlebars-mode")
+(require 'handlebars-mode)
+(add-to-list 'auto-mode-alist '("\\.handlebar$" . handlebars-mode))
+
+;; Markdown editing
+(add-path "markdown-mode")
+(require 'markdown-mode)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; - Tell me when I make stupid whitespaces
 (setq-default show-trailing-whitespace t)
