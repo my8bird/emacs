@@ -15,7 +15,7 @@
 (setq-default c-basic-offset 3)
 
 (add-hook 'python-mode-hook '(lambda ()
-(setq python-indent 3)))
+   (setq python-indent 3)))
 
 ;; Setup theming
 (add-path "color-theme")
@@ -30,6 +30,10 @@
 (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
 (setq ispell-program-name "aspell")
 (require 'ispell)
+
+;; SmartTab
+;;(add-path "smart-tab")
+;;(require 'smart-tab)
 
 ;; Add the packages I care about
 ;; -JavaScript

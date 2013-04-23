@@ -10,3 +10,6 @@
 [submodule "color-theme"]
 	path = color-theme
 	url = git@github.com:my8bird/emacs-color-theme.git
+[submodule "smart-tab"]
+	path = smart-tab
+	url = git://github.com/genehack/smart-tab.git
