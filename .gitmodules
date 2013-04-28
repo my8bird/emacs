@@ -13,3 +13,6 @@
 [submodule "smart-tab"]
 	path = smart-tab
 	url = git://github.com/genehack/smart-tab.git
+[submodule "emacs-color-theme-solarized"]
+	path = emacs-color-theme-solarized
+	url = git://github.com/sellout/emacs-color-theme-solarized.git
