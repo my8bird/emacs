@@ -59,17 +59,17 @@
 ;; Python
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking FILE-NAME.
-This is a replacement for `flymake-create-temp-inplace'. The
-difference is that it gives a file name in
-`temporary-file-directory' instead of the same directory as
-FILE-NAME.
+   This is a replacement for `flymake-create-temp-inplace'. The
+   difference is that it gives a file name in
+   `temporary-file-directory' instead of the same directory as
+   FILE-NAME.
 
-For the use of PREFIX see that function.
+   For the use of PREFIX see that function.
 
-Note that not making the temporary file in another directory
-\(like here) will not if the file you are checking depends on
-relative paths to other files \(for the type of checks flymake
-makes)."
+   Note that not making the temporary file in another directory
+   \(like here) will not if the file you are checking depends on
+   relative paths to other files \(for the type of checks flymake
+   makes)."
   (unless (stringp file-name)
     (error "Invalid file-name"))
   (or prefix
@@ -83,6 +83,13 @@ makes)."
          )
     (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
     temp-name))
+
+(eval-after-load "flymake"
+  '(progn
+     (defun flymake-after-change-function (start stop len)
+       "Start syntax check for current buffer if it isn't already running."
+       ;; Do nothing, don't want to run checks until I save.
+       )))
 
 (when (load "flymake" t)
   (defun flymake-pyflakes-init ()
@@ -161,3 +168,21 @@ makes)."
 (setq indent-tabs-mode nil) ; always replace tabs with spaces
 (setq tab-width 3) ; set tab width to 3 for all buffers
 (setq c-basic-offset 3)
+
+
+(defun open-selected-py-import-file ()
+  "Locates the file for the current import path and opens its buffer"
+  (interactive)
+  (open-py-import-file (buffer-substring (region-beginning ) (region-end ))))
+
+(defvar find-py-script-path (concat emacs-root "/find_python_file.py"))
+(defun open-py-import-file (import-path)
+  "Opens the supplied import path as a buffer"
+  (interactive)
+  (message import-path)
+  (let ((py-out (shell-command-to-string (concat "python " find-py-script-path " " import-path))))
+    (message py-out)
+    (if (file-exists-p py-out)
+        (find-file py-out))))
+
+(global-set-key (kbd "C-c p") 'open-selected-py-import-file)
