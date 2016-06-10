@@ -1,157 +1,21 @@
-(defvar emacs-root (concat (getenv "HOME") "/.emacs.d/"))
+(byte-recompile-directory (expand-file-name "~/.emacs.d/elpa") 0)
 
-(defun add-path (p)
-  (add-to-list 'load-path (concat emacs-root p)))
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;(add-to-list 'package-archives
+;             '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
 
-(defvar *emacs-load-start* (current-time))
-
-;; Set the whitespace rules I must follow
-;; - Do this before loading other things encase they cash them
-(setq-default py-indent-offset 3)
-(setq-default indent-tabs-mode nil)
-(setq js-indent-level 3)
-(setq-default indent-tabs-mode nil) ; always replace tabs with spaces
-(setq-default tab-width 3) ; set tab width to 3 for all buffers
-(setq-default c-basic-offset 3)
-
-(add-hook 'python-mode-hook '(lambda ()
-   (setq python-indent 3)))
-
-;; Setup theming
-;;(add-path "color-theme")
-;;(require 'color-theme)
-;;(eval-after-load "color-theme"
-;;  '(progn
-;;    (color-theme-initialize)
-;;     (color-theme-charcoal-black)))
-
-(add-to-list 'custom-theme-load-path (concat emacs-root "emacs-color-theme-solarized"))
-(load-theme 'solarized-dark t)
-
-
-;; Spell checking
-(add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
-(setq ispell-program-name "aspell")
-(require 'ispell)
-
-;; SmartTab
-;;(add-path "smart-tab")
-;;(require 'smart-tab)
-
-;; Add the packages I care about
-;; -JavaScript
-(add-path "js2-mode")
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;; CoffeeScript
-(add-path "coffee-mode")
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-
-;; SCSS
-(add-path "scss-mode")
-(require 'scss-mode)
-(setq scss-compile-at-save nil)
-(add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
-(setq scss-compile-at-save nil)
-
-;; Python
-(defun flymake-create-temp-intemp (file-name prefix)
-  "Return file name in temporary directory for checking FILE-NAME.
-   This is a replacement for `flymake-create-temp-inplace'. The
-   difference is that it gives a file name in
-   `temporary-file-directory' instead of the same directory as
-   FILE-NAME.
-
-   For the use of PREFIX see that function.
-
-   Note that not making the temporary file in another directory
-   \(like here) will not if the file you are checking depends on
-   relative paths to other files \(for the type of checks flymake
-   makes)."
-  (unless (stringp file-name)
-    (error "Invalid file-name"))
-  (or prefix
-      (setq prefix "flymake"))
-  (let* ((name (concat
-                (file-name-nondirectory
-                 (file-name-sans-extension file-name))
-                "_" prefix))
-         (ext  (concat "." (file-name-extension file-name)))
-         (temp-name (make-temp-file name nil ext))
-         )
-    (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
-    temp-name))
-
-(eval-after-load "flymake"
-  '(progn
-     (defun flymake-after-change-function (start stop len)
-       "Start syntax check for current buffer if it isn't already running."
-       ;; Do nothing, don't want to run checks until I save.
-       )))
-
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-intemp))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "pyflakes"  (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-
-(setq temporary-file-directory "~/.emacs.d/tmp/")
-(add-hook 'python-mode-hook 'flymake-mode)
-
-;; Enable spell check
-;;(mapcar (lambda (mode-hook) (add-hook mode-hook 'flyspell-prog-mode))
-;;        '(python-mode-hook))
-
-
-;; Handlebars
-;;(add-path "handlebars-mode")
-;;(require 'handlebars-mode)
-;;(add-to-list 'auto-mode-alist '("\\.handlebar$" . handlebars-mode))
-
-;; Markdown editing
-;;(add-path "markdown-mode")
-;;(require 'markdown-mode)
-;;(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-;; - Tell me when I make stupid whitespaces
-(setq-default show-trailing-whitespace t)
-;; - Provide a simple way to fix white space
-(global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
-
-;; Setup the UI the way i like it
-;; - move the scrollbars
-(setq scroll-bar-mode-explicit t)
-(set-scroll-bar-mode `right)
+(package-initialize)
 
 ;; - There is no reason for the toolbar
 (tool-bar-mode -1)
 
-;; - Why would I want to see the splash screen
-(setq inhibit-splash-screen t)
-
-;; - Keep the menus upto date.
-(setq imenu-auto-rescan 1)
-
 ;; - Show the column count in the mode line
 (column-number-mode t)
 
-;; Key Bindings
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\r" 'newline-and-indent)
-
-;; Easier File Finder (C-x C-f)
-(require 'ido)
-(ido-mode t)
-(setq ido-max-directory-size 100000)
+(setq-default show-trailing-whitespace t)
+(global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
 ;; Auto revert files
 (global-auto-revert-mode 1)
@@ -160,29 +24,26 @@
 (setq make-backup-files -1)
 (setq version-control -1)
 
-;; Set the whitespace rules I must follow
-;; - Do this before loading other things encase they cash them
-(setq py-indent-offset 3)
-(setq indent-tabs-mode nil)
-(setq js-indent-level 3)
-(setq indent-tabs-mode nil) ; always replace tabs with spaces
-(setq tab-width 3) ; set tab width to 3 for all buffers
-(setq c-basic-offset 3)
+;; Hide file menu
+(menu-bar-mode -1)
 
+(add-hook 'after-init-hook (lambda () (load "~/.emacs.d/after_package.el")))
 
-(defun open-selected-py-import-file ()
-  "Locates the file for the current import path and opens its buffer"
-  (interactive)
-  (open-py-import-file (buffer-substring (region-beginning ) (region-end ))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" default)))
+ '(package-selected-packages
+   (quote
+    (mmm-mode markdown-mode+ markdown-mode typescript-mode flymake-python-pyflakes helm-fuzzy-find helm-git-files js2-refactor js2-highlight-vars ac-js2 js2-mode multi-term helm-ls-git helm-cmd-t auto-complete helm darktooth-theme elpy))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
-(defvar find-py-script-path (concat emacs-root "/find_python_file.py"))
-(defun open-py-import-file (import-path)
-  "Opens the supplied import path as a buffer"
-  (interactive)
-  (message import-path)
-  (let ((py-out (shell-command-to-string (concat "python " find-py-script-path " " import-path))))
-    (message py-out)
-    (if (file-exists-p py-out)
-        (find-file py-out))))
-
-(global-set-key (kbd "C-c p") 'open-selected-py-import-file)
